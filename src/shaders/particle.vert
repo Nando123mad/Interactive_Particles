@@ -13,6 +13,7 @@ uniform mat4 projectionMatrix;
 
 uniform float uTime;
 uniform float uRandom;
+uniform vec3 uColor;
 uniform float uDepth;
 uniform float uSize;
 uniform vec2 uTextureSize;

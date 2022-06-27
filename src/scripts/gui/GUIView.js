@@ -11,10 +11,13 @@ export default class GUIView {
 		this.particlesDepth = 4;
 		this.particlesSize = 1.5;
 		
+		this.particlesColor= [129,42,245];
+
+
 		this.touchRadius = 0.15;
 
 		this.range = [0, 1];
-		this.rangeRandom = [1, 10];
+		this.rangeRandom = [1, 50];
 		this.rangeSize = [0, 3];
 		this.rangeDepth = [1, 10];
 		this.rangeRadius = [0, 0.5];
@@ -26,6 +29,8 @@ export default class GUIView {
 	}
 
 	initControlKit() {
+		
+		var obj = {color:'#812AF5'};
 		this.controlKit = new ControlKit();
 		this.controlKit.addPanel({ width: 300, enable: false })
 
@@ -38,6 +43,7 @@ export default class GUIView {
 		.addSlider(this, 'particlesRandom', 'rangeRandom', { label: 'random', onChange: this.onParticlesChange.bind(this) })
 		.addSlider(this, 'particlesDepth', 'rangeDepth', { label: 'depth', onChange: this.onParticlesChange.bind(this) })
 		.addSlider(this, 'particlesSize', 'rangeSize', { label: 'size', onChange: this.onParticlesChange.bind(this) })
+		.addColor(this, 'particlesColor',{ label: 'color', onChange: this.onParticlesChange.bind(this), colorMode:'rgb'})
 
 		// store reference to canvas
 		const component = this.controlKit.getComponentBy({ label: 'trail' });
@@ -99,6 +105,8 @@ export default class GUIView {
 		this.app.webgl.particles.object3D.material.uniforms.uRandom.value = this.particlesRandom;
 		this.app.webgl.particles.object3D.material.uniforms.uDepth.value = this.particlesDepth;
 		this.app.webgl.particles.object3D.material.uniforms.uSize.value = this.particlesSize;
+		this.app.webgl.particles.object3D.material.uniforms.uColor.value = this.particlesColor;
+		console.log(this.particlesColor)
 
 		this.app.webgl.particles.hitArea.material.visible = this.particlesHitArea;
 	}
