@@ -68,6 +68,8 @@ export default class Particles {
 			uColor: { value:  new THREE.Vector3(129,42,245) },
 			uDepth: { value: 2.0 },
 			uSize: { value: 0.0 },
+			uPositionIntensity: { value: 0.5 },
+			uSizeIntensity: { value: 0.2 },
 			uTextureSize: { value: new THREE.Vector2(this.width, this.height) },
 			uTexture: { value: this.texture },
 			uTouch: { value: null },

@@ -31,7 +31,7 @@ void main() {
 	// vec4 colB2 = vec4( colB.x + (grey - colB.x) * average, colB.y + (grey - colB.y) * average, colB.z + (grey - colB.z) * average, 1.0); // other3
 
 	// circle
-	float border = 0.3;
+	float border = 0.5;
 	float radius = 0.5;
 	float dist = radius - distance(uv, vec2(0.5));
 	float t = smoothstep(0.0, border, dist);

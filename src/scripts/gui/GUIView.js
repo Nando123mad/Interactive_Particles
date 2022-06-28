@@ -10,7 +10,8 @@ export default class GUIView {
 		this.particlesRandom = 2;
 		this.particlesDepth = 4;
 		this.particlesSize = 1.5;
-		
+		this.particlesSizeIntensity = 0.5;
+		this.particlesPositionIntensity = 0.2;
 		this.particlesColor= [129,42,245];
 
 
@@ -21,6 +22,8 @@ export default class GUIView {
 		this.rangeSize = [0, 3];
 		this.rangeDepth = [1, 10];
 		this.rangeRadius = [0, 0.5];
+		this.rangeSizeIntensity = [0, 10];
+		this.rangePositionIntensity = [0, 10];
 
 		this.initControlKit();
 		// this.initStats();
@@ -43,6 +46,8 @@ export default class GUIView {
 		.addSlider(this, 'particlesRandom', 'rangeRandom', { label: 'random', onChange: this.onParticlesChange.bind(this) })
 		.addSlider(this, 'particlesDepth', 'rangeDepth', { label: 'depth', onChange: this.onParticlesChange.bind(this) })
 		.addSlider(this, 'particlesSize', 'rangeSize', { label: 'size', onChange: this.onParticlesChange.bind(this) })
+		.addSlider(this, 'particlesSizeIntensity', 'rangeSizeIntensity', { label: 'size intensity', onChange: this.onParticlesChange.bind(this) })
+		.addSlider(this, 'particlesPositionIntensity', 'rangePositionIntensity', { label: 'position intensity', onChange: this.onParticlesChange.bind(this) })
 		.addColor(this, 'particlesColor',{ label: 'color', onChange: this.onParticlesChange.bind(this), colorMode:'rgb'})
 
 		// store reference to canvas
@@ -106,6 +111,8 @@ export default class GUIView {
 		this.app.webgl.particles.object3D.material.uniforms.uDepth.value = this.particlesDepth;
 		this.app.webgl.particles.object3D.material.uniforms.uSize.value = this.particlesSize;
 		this.app.webgl.particles.object3D.material.uniforms.uColor.value = this.particlesColor;
+		this.app.webgl.particles.object3D.material.uniforms.uSizeIntensity.value = this.particlesSizeIntensity;
+		this.app.webgl.particles.object3D.material.uniforms.uPositionIntensity.value = this.particlesPositionIntensity;
 		console.log(this.particlesColor)
 
 		this.app.webgl.particles.hitArea.material.visible = this.particlesHitArea;
