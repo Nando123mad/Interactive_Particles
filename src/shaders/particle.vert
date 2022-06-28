@@ -40,7 +40,7 @@ varying vec2 vUv;
 #pragma glslify: pnoise4 = require(glsl-noise/periodic/4d)
 
 float random(float n) {
-	float randomMultiplier = 4500.5453123;// 43758.5453123 original number
+	float randomMultiplier = 43758.5453123;// 43758.5453123 original number
 	return fract(sin(n) * randomMultiplier);
 }
 

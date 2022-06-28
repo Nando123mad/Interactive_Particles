@@ -30,14 +30,16 @@ void main() {
 	vec4 colB2a = vec4(uColor2.r/255.0, uColor2.g/255.0, uColor2.b/255.0, 1.0); // too flat
 
 	//  vec4 colB2 = vec4(grey,grey,grey, 1.0); // all white
-	vec4 colB2 = colB; // FlatColor
-	vec4 colB2b = colB2a; // FlatColor
+
+	// vec4 colB2 = colB; // FlatColor
+	// vec4 colB2b = colB2a; // FlatColor
+
 	// vec4 colB2 = vec4( colB.x + (1.0 - colB.x) * grey, colB.y + (1.0 - colB.y) * grey, colB.z + (1.0 - colB.z) * grey, 1.0); // tint
 	// vec4 colB2 = vec4( colB.x + (1.0 - grey), colB.y + (1.0 - grey), colB.z + (1.0 - grey), 1.0); // shade
 	// vec4 colB2 = vec4( colB.x + (0.21 - colB.x) * grey, colB.y + (0.71 - colB.y) * grey, colB.z + (0.07 - colB.z) * grey, 1.0); // other
 	
-	//  vec4 colB2 = vec4( colB.x + (grey - colB.x) * 0.21, colB.y + (grey - colB.y) * 0.71, colB.z + (grey - colB.z) * 0.07, 1.0); // other2
-	//  vec4 colB2b = vec4( colB2a.x + (grey - colB2a.x) * 0.21, colB2a.y + (grey - colB2a.y) * 0.71, colB2a.z + (grey - colB2a.z) * 0.07, 1.0); // other2
+	  vec4 colB2 = vec4( colB.x + (grey - colB.x) * 0.21, colB.y + (grey - colB.y) * 0.71, colB.z + (grey - colB.z) * 0.07, 1.0); // other2
+	  vec4 colB2b = vec4( colB2a.x + (grey - colB2a.x) * 0.21, colB2a.y + (grey - colB2a.y) * 0.71, colB2a.z + (grey - colB2a.z) * 0.07, 1.0); // other2
 	 
 	// vec4 colB2 = vec4( colB.x + (grey - colB.x) * average, colB.y + (grey - colB.y) * average, colB.z + (grey - colB.z) * average, 1.0); // other3
 

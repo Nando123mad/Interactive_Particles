@@ -41,7 +41,7 @@ export default class GUIView {
 	initControlKit() {
 		
 		this.controlKit = new ControlKit();
-		this.controlKit.addPanel({ width: 350, enable: true})
+		this.controlKit.addPanel({ width: 350, enable: false})
 
 		.addGroup({label: 'Touch', enable: true })
 		.addCanvas({ label: 'trail', height: 64 })
@@ -127,7 +127,6 @@ export default class GUIView {
 		this.app.webgl.particles.object3D.material.uniforms.uPositionX.value = this.particlesPositionX;
 		this.app.webgl.particles.object3D.material.uniforms.uPositionY.value = this.particlesPositionY;
 		this.app.webgl.particles.object3D.material.uniforms.uPositionZ.value = this.particlesPositionZ;
-		console.log(this.particlesColor)
 
 		this.app.webgl.particles.hitArea.material.visible = this.particlesHitArea;
 	}
