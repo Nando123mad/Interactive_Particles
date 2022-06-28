@@ -14,11 +14,15 @@ uniform mat4 projectionMatrix;
 uniform float uTime;
 uniform float uRandom;
 uniform vec3 uColor;
-uniform float uDepth;
 uniform float uSize;
 uniform float uSizeIntensity;
+
 uniform float uPositionIntensity;
+uniform float uPositionX;
+uniform float uPositionY;
+uniform float uPositionZ;
 uniform vec2 uTextureSize;
+
 uniform sampler2D uTexture;
 uniform sampler2D uTouch;
 
@@ -26,9 +30,18 @@ varying vec2 vPUv;
 varying vec2 vUv;
 
 #pragma glslify: snoise2 = require(glsl-noise/simplex/2d)
+#pragma glslify: snoise3 = require(glsl-noise/simplex/3d)
+#pragma glslify: snoise4 = require(glsl-noise/simplex/4d)
+#pragma glslify: cnoise2 = require(glsl-noise/classic/2d)
+#pragma glslify: cnoise3 = require(glsl-noise/classic/3d)
+#pragma glslify: cnoise4 = require(glsl-noise/classic/4d)
+#pragma glslify: pnoise2 = require(glsl-noise/periodic/2d)
+#pragma glslify: pnoise3 = require(glsl-noise/periodic/3d)
+#pragma glslify: pnoise4 = require(glsl-noise/periodic/4d)
 
 float random(float n) {
-	return fract(sin(n) * 43758.5453123);
+	float randomMultiplier = 0.5453123;// 43758.5453123 original number
+	return fract(sin(n) * randomMultiplier);
 }
 
 void main() {
@@ -45,11 +58,27 @@ void main() {
 	// displacement
 	vec3 displaced = offset;
 	// randomise
-	displaced.xy += vec2(random(pindex) - 0.5, random(offset.x + pindex) - 0.5) * uRandom;
-	float rndz = (random(pindex) + snoise_1_2(vec2(pindex * 0.1, uTime * uPositionIntensity)));
-	displaced.z += rndz * (random(pindex) * 2.0 * uDepth);
+	// displaced.xy += vec2(random(pindex) - 0.5, random(offset.x + pindex) - 0.5) * uRandom;
+	float rndz = (random(pindex) + snoise2(vec2(pindex * 0.1, uTime * uPositionIntensity)));
+	
+
+
+
 	// center
 	displaced.xy -= uTextureSize * 0.5;
+	
+	//displaced.x += sin(rndz * (random(pindex) * 2.0 )) * uPositionX;
+	displaced.x += sin(rndz * (random(pindex) * 2.0 )) * uPositionX;
+
+	//displaced.y += cos(rndz * (random(pindex) * 2.0 )) * uPositionY;
+	displaced.y += cos(rndz * (random(pindex) * 2.0 )) * uPositionY;
+
+    // displaced.z += rndz * ( random(pindex) * 2.0 );
+	displaced.z += (rndz * (random(pindex) * 2.0)) *uPositionZ;
+
+
+
+
 
 	// touch
 	float t = texture2D(uTouch, puv).r;
@@ -58,7 +87,7 @@ void main() {
 	displaced.y += sin(angle) * t * 20.0 * rndz;
 
 	// particle size
-	float psize = (snoise_1_2(vec2(uTime, pindex) * uSizeIntensity) + 2.0);
+	float psize = (cnoise2(vec2(uTime, pindex) * uSizeIntensity) + 2.0);
 	psize *= max(grey, 0.2);
 	psize *= uSize;
 

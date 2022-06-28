@@ -64,11 +64,13 @@ export default class Particles {
 
 		const uniforms = {
 			uTime: { value: 0 },
-			uRandom: { value: 1.0 },
+			uRandom: { value: 100.0 },
 			uColor: { value:  new THREE.Vector3(129,42,245) },
-			uDepth: { value: 2.0 },
 			uSize: { value: 0.0 },
 			uPositionIntensity: { value: 0.5 },
+			uPositionX: { value: 5.0 },
+			uPositionY: { value: 5.0 },
+			uPositionZ: { value: 5.0 },
 			uSizeIntensity: { value: 0.2 },
 			uTextureSize: { value: new THREE.Vector2(this.width, this.height) },
 			uTexture: { value: this.texture },
@@ -81,7 +83,7 @@ export default class Particles {
 			fragmentShader: glslify(require('../../../shaders/particle.frag')),
 			depthTest: false,
 			transparent: true,
-			// blending: THREE.AdditiveBlending
+			// blending: THREE.AdditiveBlending // switch on blending
 		});
 
 		const geometry = new THREE.InstancedBufferGeometry();
@@ -175,7 +177,7 @@ export default class Particles {
 		// reset
 		TweenLite.fromTo(this.object3D.material.uniforms.uSize, time, { value: 0.5 }, { value: 1.5 });
 		TweenLite.to(this.object3D.material.uniforms.uRandom, time, { value: 2.0 });
-		TweenLite.fromTo(this.object3D.material.uniforms.uDepth, time * 1.5, { value: 40.0 }, { value: 4.0 });
+		TweenLite.fromTo(this.object3D.material.uniforms.uPositionZ, time * 1.5, { value: 40.0 }, { value: 4.0 });
 
 		this.addListeners();
 	}
@@ -186,7 +188,7 @@ export default class Particles {
 				if (_destroy) this.destroy();
 				resolve();
 			} });
-			TweenLite.to(this.object3D.material.uniforms.uDepth, time, { value: -20.0, ease: Quad.easeIn });
+			TweenLite.to(this.object3D.material.uniforms.uPositionZ, time, { value: -20.0, ease: Quad.easeIn });
 			TweenLite.to(this.object3D.material.uniforms.uSize, time * 0.8, { value: 0.0 });
 
 			this.removeListeners();

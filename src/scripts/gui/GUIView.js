@@ -8,10 +8,13 @@ export default class GUIView {
 
 		this.particlesHitArea = false;
 		this.particlesRandom = 2;
-		this.particlesDepth = 4;
+		this.particlesPositionZ = 4;
 		this.particlesSize = 1.5;
 		this.particlesSizeIntensity = 0.5;
 		this.particlesPositionIntensity = 0.2;
+		this.particlesPositionX = 5;
+		this.particlesPositionY = 5;
+		this.particlesPositionZ = 5;
 		this.particlesColor= [129,42,245];
 
 
@@ -20,10 +23,13 @@ export default class GUIView {
 		this.range = [0, 1];
 		this.rangeRandom = [1, 50];
 		this.rangeSize = [0, 3];
-		this.rangeDepth = [1, 10];
 		this.rangeRadius = [0, 0.5];
 		this.rangeSizeIntensity = [0, 10];
+
 		this.rangePositionIntensity = [0, 10];
+		this.rangePositionX = [0, 10];
+		this.rangePositionY = [0, 10];
+		this.rangePositionZ = [0, 10];
 
 		this.initControlKit();
 		// this.initStats();
@@ -33,9 +39,8 @@ export default class GUIView {
 
 	initControlKit() {
 		
-		var obj = {color:'#812AF5'};
 		this.controlKit = new ControlKit();
-		this.controlKit.addPanel({ width: 300, enable: false })
+		this.controlKit.addPanel({ width: 350, enable: true})
 
 		.addGroup({label: 'Touch', enable: true })
 		.addCanvas({ label: 'trail', height: 64 })
@@ -43,12 +48,16 @@ export default class GUIView {
 		
 		.addGroup({label: 'Particles', enable: true })
 		// .addCheckbox(this, 'particlesHitArea', { label: 'hit area', onChange: this.onParticlesChange.bind(this) })
-		.addSlider(this, 'particlesRandom', 'rangeRandom', { label: 'random', onChange: this.onParticlesChange.bind(this) })
-		.addSlider(this, 'particlesDepth', 'rangeDepth', { label: 'depth', onChange: this.onParticlesChange.bind(this) })
+		.addSlider(this, 'particlesRandom', 'rangeRandom', { label: 'random position', onChange: this.onParticlesChange.bind(this) })
 		.addSlider(this, 'particlesSize', 'rangeSize', { label: 'size', onChange: this.onParticlesChange.bind(this) })
 		.addSlider(this, 'particlesSizeIntensity', 'rangeSizeIntensity', { label: 'size intensity', onChange: this.onParticlesChange.bind(this) })
-		.addSlider(this, 'particlesPositionIntensity', 'rangePositionIntensity', { label: 'position intensity', onChange: this.onParticlesChange.bind(this) })
 		.addColor(this, 'particlesColor',{ label: 'color', onChange: this.onParticlesChange.bind(this), colorMode:'rgb'})
+		
+		.addGroup({label: 'Particles Position', enable: true })
+		.addSlider(this, 'particlesPositionIntensity', 'rangePositionIntensity', { label: 'movement intensity ', onChange: this.onParticlesChange.bind(this) })
+		.addSlider(this, 'particlesPositionX', 'rangePositionX', { label: 'X movement radius', onChange: this.onParticlesChange.bind(this) })
+		.addSlider(this, 'particlesPositionY', 'rangePositionY', { label: 'Y movement radius', onChange: this.onParticlesChange.bind(this) })
+		.addSlider(this, 'particlesPositionZ', 'rangePositionZ', { label: 'Z movement radius', onChange: this.onParticlesChange.bind(this) })
 
 		// store reference to canvas
 		const component = this.controlKit.getComponentBy({ label: 'trail' });
@@ -108,11 +117,14 @@ export default class GUIView {
 		if (!this.app.webgl.particles) return;
 
 		this.app.webgl.particles.object3D.material.uniforms.uRandom.value = this.particlesRandom;
-		this.app.webgl.particles.object3D.material.uniforms.uDepth.value = this.particlesDepth;
 		this.app.webgl.particles.object3D.material.uniforms.uSize.value = this.particlesSize;
 		this.app.webgl.particles.object3D.material.uniforms.uColor.value = this.particlesColor;
 		this.app.webgl.particles.object3D.material.uniforms.uSizeIntensity.value = this.particlesSizeIntensity;
+
 		this.app.webgl.particles.object3D.material.uniforms.uPositionIntensity.value = this.particlesPositionIntensity;
+		this.app.webgl.particles.object3D.material.uniforms.uPositionX.value = this.particlesPositionX;
+		this.app.webgl.particles.object3D.material.uniforms.uPositionY.value = this.particlesPositionY;
+		this.app.webgl.particles.object3D.material.uniforms.uPositionZ.value = this.particlesPositionZ;
 		console.log(this.particlesColor)
 
 		this.app.webgl.particles.hitArea.material.visible = this.particlesHitArea;
