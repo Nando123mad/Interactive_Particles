@@ -40,7 +40,7 @@ varying vec2 vUv;
 #pragma glslify: pnoise4 = require(glsl-noise/periodic/4d)
 
 float random(float n) {
-	float randomMultiplier = 0.5453123;// 43758.5453123 original number
+	float randomMultiplier = 4500.5453123;// 43758.5453123 original number
 	return fract(sin(n) * randomMultiplier);
 }
 
@@ -58,7 +58,7 @@ void main() {
 	// displacement
 	vec3 displaced = offset;
 	// randomise
-	// displaced.xy += vec2(random(pindex) - 0.5, random(offset.x + pindex) - 0.5) * uRandom;
+	displaced.xy += vec2(random(pindex) - 0.5, random(offset.x + pindex) - 0.5) * uRandom;
 	float rndz = (random(pindex) + snoise2(vec2(pindex * 0.1, uTime * uPositionIntensity)));
 	
 

@@ -12,10 +12,11 @@ export default class GUIView {
 		this.particlesSize = 1.5;
 		this.particlesSizeIntensity = 0.5;
 		this.particlesPositionIntensity = 0.2;
-		this.particlesPositionX = 5;
-		this.particlesPositionY = 5;
-		this.particlesPositionZ = 5;
+		this.particlesPositionX = 2;
+		this.particlesPositionY = 2;
+		this.particlesPositionZ = 2;
 		this.particlesColor= [129,42,245];
+		this.particlesColor2= [64,0,148];
 
 
 		this.touchRadius = 0.15;
@@ -51,7 +52,8 @@ export default class GUIView {
 		.addSlider(this, 'particlesRandom', 'rangeRandom', { label: 'random position', onChange: this.onParticlesChange.bind(this) })
 		.addSlider(this, 'particlesSize', 'rangeSize', { label: 'size', onChange: this.onParticlesChange.bind(this) })
 		.addSlider(this, 'particlesSizeIntensity', 'rangeSizeIntensity', { label: 'size intensity', onChange: this.onParticlesChange.bind(this) })
-		.addColor(this, 'particlesColor',{ label: 'color', onChange: this.onParticlesChange.bind(this), colorMode:'rgb'})
+		.addColor(this, 'particlesColor',{ label: 'primary color', onChange: this.onParticlesChange.bind(this), colorMode:'rgb'})
+		.addColor(this, 'particlesColor2',{ label: 'second color', onChange: this.onParticlesChange.bind(this), colorMode:'rgb'})
 		
 		.addGroup({label: 'Particles Position', enable: true })
 		.addSlider(this, 'particlesPositionIntensity', 'rangePositionIntensity', { label: 'movement intensity ', onChange: this.onParticlesChange.bind(this) })
