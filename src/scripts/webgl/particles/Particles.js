@@ -76,6 +76,7 @@ export default class Particles {
 			uTextureSize: { value: new THREE.Vector2(this.width, this.height) },
 			uTexture: { value: this.texture },
 			uTouch: { value: null },
+			uTestNum: {value : 0.1}
 		};
 
 		const material = new THREE.RawShaderMaterial({

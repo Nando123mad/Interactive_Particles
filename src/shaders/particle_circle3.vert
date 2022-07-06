@@ -153,11 +153,6 @@ uniform float uPositionY;
 uniform float uPositionZ;
 uniform vec2 uTextureSize;
 
-
-uniform float uTestNum0;
-uniform float uTestNum1;
-uniform float uTestNum2;
-
 uniform sampler2D uTexture;
 uniform sampler2D uTouch;
 
@@ -176,39 +171,20 @@ varying float noise;
 #pragma glslify: pnoise4 = require(glsl-noise/periodic/4d)
 
 void main() {
-	vUv = uv;
+	// vUv = uv;
 
-	//particle uv
-	vec2 puv = offset.xy / uTextureSize;
-	vPUv = puv;
+	// particle uv
+	// vec2 puv = offset.xy / uTextureSize;
+	// vPUv = puv;
 
-	// pixel color
-	vec4 colA = texture2D(uTexture, puv);
-	float grey = colA.r * 0.21 + colA.g * 0.71 + colA.b * 0.07;
+	// // pixel color
+	// vec4 colA = texture2D(uTexture, puv);
+	// float grey = colA.r * 0.21 + colA.g * 0.71 + colA.b * 0.07;
 
 	// center
 	vec3 displaced = offset; 
 	displaced.xy -= uTextureSize * 0.5;
-
-    float uCurlFreq = uTestNum0;
-    float t = uTime * uTestNum0;
-    vec3 pos = displaced;
-    vec3 curlPos = displaced;
-    vec3 finalPos = vec3(0.0);
-
-    pos = curlNoise(pos * uCurlFreq + t);
-    curlPos = curlNoise(curlPos * uCurlFreq + t);
-    curlPos += curlNoise(curlPos * uCurlFreq * 2.0) * 0.5;
-    curlPos += curlNoise(curlPos * uCurlFreq * 4.0) * 0.25;
-    curlPos += curlNoise(curlPos * uCurlFreq * 8.0) * 0.125;
-    curlPos += curlNoise(pos * uCurlFreq * 16.0) * 0.0625;
-    finalPos = mix(pos, curlPos, snoise(pos + t));  
-    displaced += finalPos;
-
-	// particle size
-	float psize = (cnoise2(vec2(uTime, pindex) * uSizeIntensity) + 2.0);
-	psize *= max(grey, 0.2);
-	psize *= uSize;
+    
 
 
     // float displacement = 1.0;
@@ -220,7 +196,7 @@ void main() {
     // *-uniform-modelViewMatrix:model center and view position*
     // *-unique-position:individual vertex position * displacement noise*
 
-    gl_Position = projectionMatrix * ((modelViewMatrix * vec4(displaced, 1.0)) + vec4(position*psize, 0.0)); //Displays less desne
+    gl_Position = projectionMatrix * ((modelViewMatrix * vec4(displaced, 1.0)) + vec4(position, 0.0)); //Displays less desne
     // gl_Position = projectionMatrix * modelViewMatrix * vec4(displaced + position, 1.0);// Displays more dense
 
     

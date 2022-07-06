@@ -15,6 +15,9 @@ export default class GUIView {
 		this.particlesPositionX = 2;
 		this.particlesPositionY = 2;
 		this.particlesPositionZ = 2;
+		this.particleTestNum0 = 0.1;
+		this.particleTestNum1 = 0.1;
+		this.particleTestNum2 = 0.1;
 		this.particlesColor= [129,42,245];
 		this.particlesColor2= [64,0,148];
 
@@ -31,6 +34,10 @@ export default class GUIView {
 		this.rangePositionX = [0, 10];
 		this.rangePositionY = [0, 10];
 		this.rangePositionZ = [0, 10];
+
+		this.testNum0 = [0.0, 1.2];
+		this.testNum1 = [0.0, 1.2];
+		this.testNum2 = [0.0, 1.2];
 
 		this.initControlKit();
 		// this.initStats();
@@ -61,6 +68,12 @@ export default class GUIView {
 		.addSlider(this, 'particlesPositionY', 'rangePositionY', { label: 'Y movement radius', onChange: this.onParticlesChange.bind(this) })
 		.addSlider(this, 'particlesPositionZ', 'rangePositionZ', { label: 'Z movement radius', onChange: this.onParticlesChange.bind(this) })
 
+		
+		.addGroup({label: 'Debug', enable: true })
+		.addSlider(this, 'particleTestNum0', 'testNum0', { label: 'number0', onChange: this.onParticlesChange.bind(this) })
+		.addSlider(this, 'particleTestNum1', 'testNum1', { label: 'number1', onChange: this.onParticlesChange.bind(this) })
+		.addSlider(this, 'particleTestNum2', 'testNum2', { label: 'number2', onChange: this.onParticlesChange.bind(this) })
+
 		// store reference to canvas
 		const component = this.controlKit.getComponentBy({ label: 'trail' });
 		if (!component) return;
@@ -85,7 +98,9 @@ export default class GUIView {
 			if (!this.app.webgl) return;
 			if (!this.app.webgl.particles) return;
 			if (!this.app.webgl.particles.touch) return;
-			const source = this.app.webgl.particles.touch.canvas;
+			if (!this.app.webgl.sphereParticles) return;
+
+			const source = this.app.webgl.sphereParticles.touch.canvas;
 			const x = Math.floor((this.touchCanvas.width - source.width) * 0.5);
 			this.touchCtx.fillRect(0, 0, this.touchCanvas.width, this.touchCanvas.height);
 			this.touchCtx.drawImage(source, x, 0);
@@ -110,13 +125,16 @@ export default class GUIView {
 	onTouchChange() {
 		if (!this.app.webgl) return;
 		if (!this.app.webgl.particles) return;
+		if (!this.app.webgl.sphereParticles) return;
 
 		this.app.webgl.particles.touch.radius = this.touchRadius;
+		this.app.webgl.sphereParticles.touch.radius = this.touchRadius;
 	}
 	
 	onParticlesChange() {
 		if (!this.app.webgl) return;
 		if (!this.app.webgl.particles) return;
+		if (!this.app.webgl.sphereParticles) return;
 
 		this.app.webgl.particles.object3D.material.uniforms.uRandom.value = this.particlesRandom;
 		this.app.webgl.particles.object3D.material.uniforms.uSize.value = this.particlesSize;
@@ -129,6 +147,20 @@ export default class GUIView {
 		this.app.webgl.particles.object3D.material.uniforms.uPositionZ.value = this.particlesPositionZ;
 
 		this.app.webgl.particles.hitArea.material.visible = this.particlesHitArea;
+
+
+		this.app.webgl.sphereParticles.object3D.material.uniforms.uRandom.value = this.particlesRandom;
+		this.app.webgl.sphereParticles.object3D.material.uniforms.uSize.value = this.particlesSize;
+		this.app.webgl.sphereParticles.object3D.material.uniforms.uColor.value = this.particlesColor;
+		this.app.webgl.sphereParticles.object3D.material.uniforms.uSizeIntensity.value = this.particlesSizeIntensity;
+		this.app.webgl.sphereParticles.object3D.material.uniforms.uPositionIntensity.value = this.particlesPositionIntensity;
+		this.app.webgl.sphereParticles.object3D.material.uniforms.uPositionX.value = this.particlesPositionX;
+		this.app.webgl.sphereParticles.object3D.material.uniforms.uPositionY.value = this.particlesPositionY;
+		this.app.webgl.sphereParticles.object3D.material.uniforms.uPositionZ.value = this.particlesPositionZ;
+		this.app.webgl.sphereParticles.object3D.material.uniforms.uTestNum0.value = this.particleTestNum0;
+		this.app.webgl.sphereParticles.object3D.material.uniforms.uTestNum1.value = this.particleTestNum1;
+		this.app.webgl.sphereParticles.object3D.material.uniforms.uTestNum2.value = this.particleTestNum2;
+		this.app.webgl.sphereParticles.hitArea.material.visible = this.particlesHitArea;
 	}
 
 	onPostProcessingChange() {
